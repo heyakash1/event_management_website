@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const eventRoutes = require('./routes/eventRoutes');
 const authRoutes = require('./routes/authRoutes')
+const registrationRoutes = require('./routes/registrationRoutes');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 
 app.use('/api/events',eventRoutes);
 app.use('/api/auth',authRoutes);
+app.use('/api/registrations',registrationRoutes);
 
 app.get('/', (req, res) => {
     res.send('Server is working!');
