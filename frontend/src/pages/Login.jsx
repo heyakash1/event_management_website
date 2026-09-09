@@ -28,22 +28,32 @@ function Login() {
     };
 
     return (
-        <div style={{ maxWidth: '400px', margin: '60px auto', padding: '20px' }}>
+        <div className="auth-card">
             <h1>Admin Login</h1>
             <form onSubmit={handleSubmit}>
-                <div style={{ marginBottom: '12px' }}>
-                    <label>Email</label><br />
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ width: '100%', padding: '8px' }} />
+                <div className="form-group">
+                    <label>Email</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
                 </div>
-                <div style={{ marginBottom: '12px' }}>
-                    <label>Password</label><br />
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required style={{ width: '100%', padding: '8px' }} />
+                <div className="form-group">
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
                 </div>
-                <button type="submit" disabled={loading} style={{ padding: '10px 20px' }}>
+                <button type="submit" className="btn" disabled={loading}>
                     {loading ? 'Logging in...' : 'Login'}
                 </button>
             </form>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p className="message-error">{error}</p>}
         </div>
     );
 }

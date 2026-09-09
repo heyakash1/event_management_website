@@ -16,14 +16,14 @@ function EventDetails() {
 
     useEffect(() => {
         const fetchEvent = async () => {
-        try {
-            const response = await api.get(`/events/${id}`);
-            setEvent(response.data);
-        } catch (err) {
-            setError('Event not found.');
-        } finally {
-            setLoading(false);
-        }
+            try {
+                const response = await api.get(`/events/${id}`);
+                setEvent(response.data);
+            } catch (err) {
+                setError('Event not found.');
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchEvent();
@@ -53,7 +53,7 @@ function EventDetails() {
     if (error) return <p style={{ textAlign: 'center', color: 'red' }}>{error}</p>;
 
     return (
-        <div style={{ maxWidth: '700px', margin: '0 auto', padding: '20px' }}>
+        <div className="page">
             <Link to="/">&larr; Back to all events</Link>
             <h1>{event.title}</h1>
             <p><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
@@ -66,34 +66,32 @@ function EventDetails() {
 
             <h2>Register for this event</h2>
             <form onSubmit={handleRegister}>
-                <div style={{ marginBottom: '12px' }}>
-                    <label>Name</label><br />
+                <div className="form-group">
+                    <label>Name</label>
                     <input
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
-                        style={{ width: '100%', padding: '8px' }}
                     />
                 </div>
-                <div style={{ marginBottom: '12px' }}>
-                    <label>Email</label><br />
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        style={{ width: '100%', padding: '8px' }}
-                    />
+                <div className="form-group">
+                    <label>Email</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
                 </div>
-                <button type="submit" disabled={registering} style={{ padding: '10px 20px' }}>
+                <button type="submit" className="btn" disabled={registering}>
                     {registering ? 'Registering...' : 'Register'}
                 </button>
             </form>
 
             {message && (
-                <p style={{ color: messageType === 'success' ? 'green' : 'red', marginTop: '12px' }}>
-                {message}
+                <p className={messageType === 'success' ? 'message-success' : 'message-error'}>
+                    {message}
                 </p>
             )}
         </div>

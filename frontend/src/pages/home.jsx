@@ -26,32 +26,26 @@ function Home() {
     if (error) return <p style={{ textAlign: 'center', color: 'red' }}>{error}</p>;
 
     return (
-        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
+        <div className="page">
             <h1>Upcoming Events</h1>
-            {events.length === 0 ? (
-            <p>No events available right now.</p>
-        ) : (
-            <div style={{ display: 'grid', gap: '16px' }}>
-                {events.map((event) => (
-            <div
-                key={event._id}
-                style={{
-                    border: '1px solid #ccc',
-                    borderRadius: '8px',
-                    padding: '16px'
-                }}
-            >
-                <h2>{event.title}</h2>
-                <p>{new Date(event.date).toLocaleDateString()} — {event.location}</p>
-                <p>{event.description}</p>
-                <p><strong>{event.price === 0 ? 'Free' : `₹${event.price}`}</strong></p>
-                <Link to={`/events/${event._id}`}>View Details</Link>
-            </div>
-            ))}
+                {events.length === 0 ? (
+                    <p>No events available right now.</p>
+                ) : (
+                    <div>
+                        {events.map((event) => (
+                            <div className="event-card" key={event._id}>
+                                <h2>{event.title}</h2>
+                                <p>{new Date(event.date).toLocaleDateString()} — {event.location}</p>
+                                <p>{event.description}</p>
+                                <span className="price-tag">{event.price === 0 ? 'Free' : `₹${event.price}`}</span>
+                                <br /><br />
+                                <Link to={`/events/${event._id}`}>View Details →</Link>
+                            </div>
+                        ))}
+                    </div>
+                )}
         </div>
-        )}
-    </div>
-    );    
+    );
 }
 
 export default Home;

@@ -93,51 +93,77 @@ function AdminPanel() {
     if (loading) return <p style={{ textAlign: 'center' }}>Loading admin panel...</p>;
 
     return (
-        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '20px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div className="page">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h1>Admin Panel</h1>
-                <button onClick={logout}>Logout</button>
+                <button className="btn btn-secondary" onClick={logout}>Logout</button>
             </div>
 
-            {message && <p style={{ color: 'blue' }}>{message}</p>}
+            {message && <p className="message-success">{message}</p>}
 
             <h2>{editingId ? 'Edit Event' : 'Create New Event'}</h2>
             <form onSubmit={handleSubmit} style={{ marginBottom: '30px' }}>
-                <input name="title" placeholder="Title" value={form.title} onChange={handleChange} required style={{ display: 'block', width: '100%', padding: '8px', marginBottom: '8px' }} />
-                <textarea name="description" placeholder="Description" value={form.description} onChange={handleChange} required style={{ display: 'block', width: '100%', padding: '8px', marginBottom: '8px' }} />
-                <input name="date" type="date" value={form.date} onChange={handleChange} required style={{ display: 'block', width: '100%', padding: '8px', marginBottom: '8px' }} />
-                <input name="location" placeholder="Location" value={form.location} onChange={handleChange} required style={{ display: 'block', width: '100%', padding: '8px', marginBottom: '8px' }} />
-                <input name="capacity" type="number" placeholder="Capacity" value={form.capacity} onChange={handleChange} required style={{ display: 'block', width: '100%', padding: '8px', marginBottom: '8px' }} />
-                <input name="price" type="number" placeholder="Price" value={form.price} onChange={handleChange} style={{ display: 'block', width: '100%', padding: '8px', marginBottom: '8px' }} />
-                <button type="submit" style={{ padding: '10px 20px' }}>{editingId ? 'Update Event' : 'Create Event'}</button>
-                {editingId && <button type="button" onClick={resetForm} style={{ marginLeft: '10px' }}>Cancel</button>}
+                <div className="form-group">
+                    <label>Title</label>
+                    <input name="title" value={form.title} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label>Description</label>
+                    <textarea name="description" value={form.description} onChange={handleChange} required rows="3" />
+                </div>
+                <div className="form-group">
+                    <label>Date</label>
+                    <input name="date" type="date" value={form.date} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label>Location</label>
+                    <input name="location" value={form.location} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label>Capacity</label>
+                    <input name="capacity" type="number" value={form.capacity} onChange={handleChange} required />
+                </div>
+                <div className="form-group">
+                    <label>Price</label>
+                    <input name="price" type="number" value={form.price} onChange={handleChange} />
+                </div>
+                <button type="submit" className="btn">{editingId ? 'Update Event' : 'Create Event'}</button>
+                    {editingId && (
+                    <button type="button" className="btn btn-secondary" onClick={resetForm} style={{ marginLeft: '10px' }}>
+                        Cancel
+                    </button>
+                    )}
             </form>
 
             <h2>All Events</h2>
-            {events.map((event) => (
-                <div key={event._id} style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '12px', marginBottom: '12px' }}>
+                {events.map((event) => (
+                <div className="event-card" key={event._id}>
                     <h3>{event.title}</h3>
                     <p>{new Date(event.date).toLocaleDateString()} — {event.location}</p>
-                    <button onClick={() => handleEdit(event)}>Edit</button>
-                    <button onClick={() => handleDelete(event._id)} style={{ marginLeft: '8px' }}>Delete</button>
-                    <button onClick={() => handleViewRegistrations(event._id)} style={{ marginLeft: '8px' }}>View Registrations</button>
+                    <button className="btn" onClick={() => handleEdit(event)}>Edit</button>
+                    <button className="btn btn-danger" onClick={() => handleDelete(event._id)} style={{ marginLeft: '8px' }}>
+                        Delete
+                    </button>
+                    <button className="btn btn-secondary" onClick={() => handleViewRegistrations(event._id)} style={{ marginLeft: '8px' }}>
+                        View Registrations
+                    </button>
 
                     {viewingRegistrations === event._id && (
                         <div style={{ marginTop: '10px', paddingLeft: '10px', borderLeft: '3px solid #ddd' }}>
                             <strong>Registrations ({registrations.length}):</strong>
-                            {registrations.length === 0 ? (
-                                <p>No one has registered yet.</p>
-                            ) : (
+                                {registrations.length === 0 ? (
+                                    <p>No one has registered yet.</p>
+                                ) : (
                                 <ul>
                                     {registrations.map((r) => (
-                                <li key={r._id}>{r.name} — {r.email}</li>
+                                        <li key={r._id}>{r.name} — {r.email}</li>
                                     ))}
                                 </ul>
                                 )}
                         </div>
                     )}
                 </div>
-            ))}
+                ))}
         </div>
     );
 }
